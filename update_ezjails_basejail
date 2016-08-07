@@ -1,0 +1,16 @@
+!/bin/bash
+# Martin Häggström 111002
+# Program to update the basejail created by ezjail-admin
+
+RESTART_JAILS=$1
+
+ezjail-admin update -u
+
+[ "$RESTART_JAILS" = restart ] && echo "Restarting jails" || { echo "pass restart as a parameter to restart the jails"; exit 1; }
+
+JAILS=(`ezjail-admin list | grep -vE '(^STA|^-)' | awk '$1 ~ /^.R/ {print $4}' | sort`)
+
+for jail in ${JAILS[*]}
+do
+        /usr/local/etc/rc.d/ezjail restart $jail
+done
