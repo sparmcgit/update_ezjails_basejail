@@ -1,1 +1,1 @@
-update_ezjails_basejail
+Update ezjails basejail i FreeBSD
